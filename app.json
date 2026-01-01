@@ -18,7 +18,13 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.nigerservices"
+      "bundleIdentifier": "com.nigerservices",
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": [
+          "tel",
+          "telprompt"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {

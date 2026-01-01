@@ -142,6 +142,24 @@ const KNOWLEDGE_BASE: KnowledgeEntry[] = [
     response: "L'artisanat nigérien est célèbre pour :\n\n• **La Croix d'Agadez :** Bijou en argent emblématique.\n• **Le Cuir :** Maroquinerie de Tahoua et Maradi.\n• **Les Tapis de Terra :** Tissages traditionnels.\n• **La Poterie de Boubon.**",
     category: 'culture',
   },
+  {
+    title: 'Parenté à plaisanterie',
+    keywords: ['parente', 'plaisanterie', 'cousinage', 'social', 'paix'],
+    response: "La **Parenté à plaisanterie** (ou *Cousinage à plaisanterie*) est un pilier de la cohésion sociale au Niger. 🤝\n\nC'est une tradition qui permet à différentes ethnies (par exemple, les Zarma et les Haoussa, ou les Peuls et les Kanouri) de se taquiner mutuellement sans offense. Cela désamorce les tensions et renforce les liens de fraternité. C'est un véritable modèle de gestion de la diversité !",
+    category: 'culture',
+  },
+  {
+    title: 'Cuisine Nigérienne',
+    keywords: ['manger', 'nourriture', 'plat', 'cuisine', 'riz', 'sauce', 'kilichi', 'dambou', 'massa', 'kopto', 'foura'],
+    response: "La cuisine nigérienne est savoureuse et variée ! Voici les incontournables :\n\n• **Le Kilichi :** Viande de bœuf séchée et épicée (spécialité de Madaoua).\n• **Le Dambou :** Couscous de céréales (mil ou riz) aux feuilles de moringa.\n• **Le Riz Sauce :** Plat quotidien, souvent avec de la sauce tomate ou de la sauce gombo.\n• **Le Massa :** Galettes de riz fermenté, délicieuses avec du sucre ou du piment.\n• **Le Kopto :** Salade de feuilles de moringa.\n• **Le Foura :** Boules de mil délayées dans du lait caillé (très rafraîchissant).",
+    category: 'culture',
+  },
+  {
+    title: 'Moringa (Evergreen)',
+    keywords: ['moringa', 'moringue', 'evergreen', 'plante', 'vertus'],
+    response: "Le **Moringa** (appelé *Evergreen* ou *Windi Boundou*) est extrêmement populaire au Niger. 🌿\n\nSes feuilles sont riches en vitamines et sont consommées en salade (Kopto) ou dans le Dambou. C'est une plante aux vertus nutritionnelles exceptionnelles, très cultivée dans la zone du fleuve.",
+    category: 'culture',
+  },
 
   // --- ECONOMY & RESOURCES ---
   {
@@ -197,12 +215,6 @@ const KNOWLEDGE_BASE: KnowledgeEntry[] = [
     category: 'weather',
   },
   {
-    title: 'Cuisine Nigérienne',
-    keywords: ['nourriture', 'food', 'manger', 'restaurant', 'cuisine', 'plat', 'riz', 'kilishi'],
-    response: "À goûter absolument :\n\n• **Kilishi :** Viande de bœuf séchée et épicée (spécialité de Madaoua).\n• **Riz Sauce :** Le plat quotidien.\n• **Djerma :** Couscous de mil.\n• **Foura :** Boule de mil délayée dans du lait caillé.\n• **Massa :** Galettes de riz sucrées.",
-    category: 'culture',
-  },
-  {
     title: 'Télécom & Internet',
     keywords: ['téléphone', 'phone', 'internet', 'wifi', 'réseau', 'mobile', 'airtel', 'moov', 'zamani'],
     response: "Opérateurs au Niger :\n\n• **Airtel Niger**\n• **Moov Africa**\n• **Zamani Telecom**\n\nL'indicatif téléphonique est le **+227**. La 4G est disponible dans les grandes villes. Vous pouvez acheter une carte SIM facilement avec une pièce d'identité.",
@@ -243,6 +255,12 @@ const KNOWLEDGE_BASE: KnowledgeEntry[] = [
     keywords: ['createur', 'qui t\'a fait', 'developpeur', 'yacine'],
     response: "J'ai été développé par **Yacine-ai-tech** pour aider les citoyens et les visiteurs du Niger à accéder facilement à des informations utiles, même sans connexion internet. 🇳🇪",
     category: 'personality',
+  },
+  {
+    title: 'Sultanats du Niger',
+    keywords: ['sultanat', 'sultan', 'tradition', 'chef', 'coutumier', 'zinder', 'agadez', 'dosso', 'maradi'],
+    response: "Le Niger possède des institutions traditionnelles fortes et respectées :\n\n• **Sultanat de l'Aïr (Agadez) :** Fondé au XVe siècle, un pilier de la culture Touareg.\n• **Sultanat du Damagaram (Zinder) :** Célèbre pour son palais et son histoire guerrière.\n• **Sultanat de Dosso :** Siège du Zarmakoy, chef traditionnel des Zarma.\n• **Sultanat de Maradi (Katsina) :** Important centre de la culture Haoussa.\n\nCes chefs traditionnels jouent un rôle crucial dans la médiation sociale et la préservation de la culture.",
+    category: 'culture',
   },
   {
     title: 'Zinder',

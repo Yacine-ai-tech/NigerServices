@@ -12,8 +12,13 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { Colors, Spacing, FontSize, FontWeight, BorderRadius, Shadow } from '../constants';
 import { aiService } from '../services/aiService';
+import { MainTabParamList } from '../types';
+
+type NavigationProp = BottomTabNavigationProp<MainTabParamList>;
 
 interface Message {
   id: string;
@@ -21,9 +26,11 @@ interface Message {
   isUser: boolean;
   timestamp: Date;
   suggestions?: string[];
+  category?: string;
 }
 
 export const AIScreen: React.FC = () => {
+  const navigation = useNavigation<NavigationProp>();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -78,6 +85,7 @@ export const AIScreen: React.FC = () => {
         isUser: false,
         timestamp: new Date(),
         suggestions: response.suggestions,
+        category: response.category,
       };
 
       setMessages(prev => [...prev, aiMessage]);
@@ -112,6 +120,18 @@ export const AIScreen: React.FC = () => {
         <Text style={[styles.messageText, item.isUser && styles.userMessageText]}>
           {item.text}
         </Text>
+        
+        {/* Action Buttons for specific categories */}
+        {!item.isUser && (item.category === 'emergency' || item.category === 'medical') && (
+          <TouchableOpacity 
+            style={styles.actionButton}
+            onPress={() => navigation.navigate('Emergency')}
+          >
+            <Ionicons name="call" size={18} color={Colors.white} />
+            <Text style={styles.actionButtonText}>Voir les contacts d'urgence</Text>
+          </TouchableOpacity>
+        )}
+
         {item.suggestions && item.suggestions.length > 0 && (
           <View style={styles.suggestionsContainer}>
             {item.suggestions.map((suggestion, index) => (
@@ -434,5 +454,19 @@ const styles = StyleSheet.create({
   },
   sendButtonDisabled: {
     backgroundColor: Colors.border,
+  },
+  actionButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.primary,
+    paddingVertical: Spacing.xs,
+    paddingHorizontal: Spacing.sm,
+    borderRadius: BorderRadius.md,
+    marginTop: Spacing.sm,
+  },
+  actionButtonText: {
+    fontSize: FontSize.sm,
+    color: Colors.white,
+    marginLeft: Spacing.xs,
   },
 });

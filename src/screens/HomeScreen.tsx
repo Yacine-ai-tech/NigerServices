@@ -98,7 +98,7 @@ export const HomeScreen: React.FC = () => {
                 activeOpacity={0.7}
               >
                 <View style={[styles.actionIcon, { backgroundColor: `${action.color}15` }]}>
-                  <Ionicons name={action.icon} size={28} color={action.color} />
+                  <Ionicons name={action.icon} size={24} color={action.color} />
                 </View>
                 <Text style={styles.actionTitle}>{action.title}</Text>
               </TouchableOpacity>
@@ -106,40 +106,37 @@ export const HomeScreen: React.FC = () => {
           </View>
         </View>
 
-        {/* Info Cards */}
+        {/* Did You Know Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Informations utiles</Text>
-          
-          <Card style={styles.infoCard}>
-            <View style={styles.infoRow}>
-              <Ionicons name="location" size={20} color={Colors.primary} />
-              <View style={styles.infoContent}>
-                <Text style={styles.infoLabel}>Capitale</Text>
-                <Text style={styles.infoValue}>Niamey</Text>
-              </View>
+          <Text style={styles.sectionTitle}>Le saviez-vous ?</Text>
+          <Card style={styles.factCard}>
+            <View style={styles.factIconContainer}>
+              <Ionicons name="bulb-outline" size={24} color={Colors.secondary} />
             </View>
-          </Card>
-
-          <Card style={styles.infoCard}>
-            <View style={styles.infoRow}>
-              <Ionicons name="cash" size={20} color={Colors.secondary} />
-              <View style={styles.infoContent}>
-                <Text style={styles.infoLabel}>Monnaie</Text>
-                <Text style={styles.infoValue}>Franc CFA (XOF)</Text>
-              </View>
-            </View>
-          </Card>
-
-          <Card style={styles.infoCard}>
-            <View style={styles.infoRow}>
-              <Ionicons name="call" size={20} color={Colors.error} />
-              <View style={styles.infoContent}>
-                <Text style={styles.infoLabel}>Urgences</Text>
-                <Text style={styles.infoValue}>Police: 17 | Pompiers: 18</Text>
-              </View>
+            <View style={styles.factContent}>
+              <Text style={styles.factText}>
+                Le Niger est le plus grand pays d'Afrique de l'Ouest avec une superficie de 1 267 000 km².
+              </Text>
             </View>
           </Card>
         </View>
+
+        {/* AI Assistant Promo */}
+        <TouchableOpacity 
+          style={styles.aiPromo}
+          onPress={() => navigation.navigate('AI')}
+          activeOpacity={0.9}
+        >
+          <View style={styles.aiPromoContent}>
+            <View style={styles.aiPromoText}>
+              <Text style={styles.aiPromoTitle}>Assistant Intelligent</Text>
+              <Text style={styles.aiPromoSubtitle}>Posez vos questions sur le Niger, même hors-ligne !</Text>
+            </View>
+            <View style={styles.aiPromoIcon}>
+              <Ionicons name="chatbubble-ellipses" size={32} color={Colors.white} />
+            </View>
+          </View>
+        </TouchableOpacity>
 
         {/* Footer */}
         <View style={styles.footer}>
@@ -261,9 +258,64 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.sm,
   },
   actionTitle: {
-    fontSize: FontSize.md,
+    fontSize: FontSize.xs,
     fontWeight: FontWeight.medium,
     color: Colors.textPrimary,
+    textAlign: 'center',
+  },
+  factCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: Spacing.md,
+    backgroundColor: Colors.white,
+    borderLeftWidth: 4,
+    borderLeftColor: Colors.secondary,
+  },
+  factIconContainer: {
+    marginRight: Spacing.md,
+  },
+  factContent: {
+    flex: 1,
+  },
+  factText: {
+    fontSize: FontSize.sm,
+    color: Colors.textSecondary,
+    lineHeight: 20,
+    fontStyle: 'italic',
+  },
+  aiPromo: {
+    marginTop: Spacing.xl,
+    backgroundColor: Colors.primary,
+    borderRadius: BorderRadius.lg,
+    padding: Spacing.lg,
+    ...Shadow.md,
+  },
+  aiPromoContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  aiPromoText: {
+    flex: 1,
+    marginRight: Spacing.md,
+  },
+  aiPromoTitle: {
+    fontSize: FontSize.lg,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+    marginBottom: 4,
+  },
+  aiPromoSubtitle: {
+    fontSize: FontSize.sm,
+    color: 'rgba(255, 255, 255, 0.8)',
+  },
+  aiPromoIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   infoCard: {
     marginBottom: Spacing.sm,
