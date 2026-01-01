@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "Niger Services",
+    "slug": "niger-services",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "owner": "yacineai",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": false,
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#E05206"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nigerservices.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#E05206"
+      },
+      "package": "com.nigerservices.app",
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.CALL_PHONE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-splash-screen"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "003d02b0-9840-4cea-91b4-50bfa95eecee"
+      }
+    }
+  }
+}
