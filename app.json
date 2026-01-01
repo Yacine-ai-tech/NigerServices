@@ -18,14 +18,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.nigerservices.app"
+      "bundleIdentifier": "com.nigerservices"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#E05206"
       },
-      "package": "com.nigerservices.app",
+      "package": "com.nigerservices",
       "versionCode": 1,
       "permissions": [
         "android.permission.CALL_PHONE"
