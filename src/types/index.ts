@@ -6,6 +6,7 @@ export interface Note {
   updatedAt: string;
   isPinned: boolean;
   color?: string;
+  category?: string;
 }
 
 export interface PrayerTimes {
@@ -23,6 +24,19 @@ export interface City {
   name: string;
   latitude: number;
   longitude: number;
+  population?: number;
+  region?: string;
+}
+
+export interface TouristPlace {
+  id: string;
+  name: string;
+  description: string;
+  latitude: number;
+  longitude: number;
+  city: string;
+  category: string;
+  icon: string;
 }
 
 export interface Currency {
@@ -62,6 +76,13 @@ export interface AppSettings {
   notificationsEnabled: boolean;
 }
 
+export interface UserLocation {
+  latitude: number;
+  longitude: number;
+  accuracy?: number;
+  timestamp?: number;
+}
+
 export type RootStackParamList = {
   MainTabs: undefined;
   NoteDetail: { noteId?: string };
@@ -74,4 +95,5 @@ export type MainTabParamList = {
   Prayer: undefined;
   Emergency: undefined;
   Notes: undefined;
+  AI: undefined;
 };

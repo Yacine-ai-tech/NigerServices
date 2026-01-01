@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Alert,
   RefreshControl,
+  TextInput,
+  ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -32,11 +34,22 @@ const NOTE_COLORS = [
   '#C8E6C9',
 ];
 
+const CATEGORIES = [
+  { id: 'all', name: 'Toutes', icon: 'apps' },
+  { id: 'personal', name: 'Personnel', icon: 'person' },
+  { id: 'work', name: 'Travail', icon: 'briefcase' },
+  { id: 'ideas', name: 'Idées', icon: 'bulb' },
+  { id: 'shopping', name: 'Courses', icon: 'cart' },
+];
+
 export const NotesScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp>();
   const [notes, setNotes] = useState<Note[]>([]);
+  const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   const strings = STRINGS.fr;
 
@@ -44,6 +57,7 @@ export const NotesScreen: React.FC = () => {
     try {
       const fetchedNotes = await database.getAllNotes();
       setNotes(fetchedNotes);
+      filterNotes(fetchedNotes, searchQuery, selectedCategory);
     } catch (error) {
       console.error('Error loading notes:', error);
       Alert.alert('Erreur', 'Impossible de charger les notes');
@@ -52,6 +66,36 @@ export const NotesScreen: React.FC = () => {
       setRefreshing(false);
     }
   };
+
+  const filterNotes = (allNotes: Note[], query: string, category: string) => {
+    let filtered = [...allNotes];
+    
+    if (query.trim()) {
+      const lowerQuery = query.toLowerCase();
+      filtered = filtered.filter(
+        note =>
+          note.title.toLowerCase().includes(lowerQuery) ||
+          note.content.toLowerCase().includes(lowerQuery)
+      );
+    }
+    
+    if (category !== 'all') {
+      filtered = filtered.filter(note => note.category === category);
+    }
+    
+    // Sort: pinned first, then by date
+    filtered.sort((a, b) => {
+      if (a.isPinned && !b.isPinned) return -1;
+      if (!a.isPinned && b.isPinned) return 1;
+      return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+    });
+    
+    setFilteredNotes(filtered);
+  };
+
+  useEffect(() => {
+    filterNotes(notes, searchQuery, selectedCategory);
+  }, [searchQuery, selectedCategory]);
 
   useFocusEffect(
     useCallback(() => {
@@ -182,7 +226,7 @@ export const NotesScreen: React.FC = () => {
         <View style={styles.headerContent}>
           <Text style={styles.headerTitle}>{strings.myNotes}</Text>
           <Text style={styles.headerSubtitle}>
-            {notes.length} note{notes.length !== 1 ? 's' : ''}
+            {filteredNotes.length} note{filteredNotes.length !== 1 ? 's' : ''}
           </Text>
         </View>
         <TouchableOpacity
@@ -194,11 +238,63 @@ export const NotesScreen: React.FC = () => {
         </TouchableOpacity>
       </View>
 
-      {notes.length === 0 && !isLoading ? (
+      {/* Search Bar */}
+      <View style={styles.searchContainer}>
+        <View style={styles.searchBar}>
+          <Ionicons name="search" size={20} color={Colors.textTertiary} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Rechercher une note..."
+            placeholderTextColor={Colors.textTertiary}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+          {searchQuery.length > 0 && (
+            <TouchableOpacity onPress={() => setSearchQuery('')}>
+              <Ionicons name="close-circle" size={20} color={Colors.textTertiary} />
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+
+      {/* Category Filter */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.categoryContainer}
+        contentContainerStyle={styles.categoryContent}
+      >
+        {CATEGORIES.map(cat => (
+          <TouchableOpacity
+            key={cat.id}
+            style={[
+              styles.categoryChip,
+              selectedCategory === cat.id && styles.categoryChipActive,
+            ]}
+            onPress={() => setSelectedCategory(cat.id)}
+          >
+            <Ionicons
+              name={cat.icon as keyof typeof Ionicons.glyphMap}
+              size={16}
+              color={selectedCategory === cat.id ? Colors.white : Colors.textSecondary}
+            />
+            <Text
+              style={[
+                styles.categoryText,
+                selectedCategory === cat.id && styles.categoryTextActive,
+              ]}
+            >
+              {cat.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+
+      {filteredNotes.length === 0 && !isLoading ? (
         renderEmptyState()
       ) : (
         <FlatList
-          data={notes}
+          data={filteredNotes}
           renderItem={renderNote}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContent}
@@ -217,7 +313,7 @@ export const NotesScreen: React.FC = () => {
       )}
 
       {/* Info Card */}
-      {notes.length > 0 && (
+      {filteredNotes.length > 0 && (
         <View style={styles.infoContainer}>
           <Text style={styles.infoText}>
             Appuyez longuement pour supprimer une note
@@ -262,6 +358,55 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     ...Shadow.md,
+  },
+  searchContainer: {
+    paddingHorizontal: Spacing.md,
+    paddingBottom: Spacing.sm,
+  },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.surface,
+    borderRadius: BorderRadius.lg,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    gap: Spacing.sm,
+    ...Shadow.sm,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: FontSize.md,
+    color: Colors.textPrimary,
+    padding: 0,
+  },
+  categoryContainer: {
+    maxHeight: 50,
+    marginBottom: Spacing.sm,
+  },
+  categoryContent: {
+    paddingHorizontal: Spacing.md,
+    gap: Spacing.sm,
+  },
+  categoryChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderRadius: BorderRadius.round,
+    backgroundColor: Colors.surface,
+    gap: Spacing.xs,
+    ...Shadow.sm,
+  },
+  categoryChipActive: {
+    backgroundColor: Colors.primary,
+  },
+  categoryText: {
+    fontSize: FontSize.sm,
+    color: Colors.textSecondary,
+    fontWeight: FontWeight.medium,
+  },
+  categoryTextActive: {
+    color: Colors.white,
   },
   listContent: {
     padding: Spacing.md,

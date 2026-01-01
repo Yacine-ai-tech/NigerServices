@@ -69,7 +69,9 @@ export const HomeScreen: React.FC = () => {
           </View>
           <View style={styles.flagContainer}>
             <View style={[styles.flagStripe, styles.flagOrange]} />
-            <View style={[styles.flagStripe, styles.flagWhite]} />
+            <View style={[styles.flagStripe, styles.flagWhite]}>
+              <View style={styles.flagSun} />
+            </View>
             <View style={[styles.flagStripe, styles.flagGreen]} />
           </View>
         </View>
@@ -186,11 +188,13 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: BorderRadius.sm,
     overflow: 'hidden',
-    flexDirection: 'row',
+    flexDirection: 'column',
     ...Shadow.sm,
   },
   flagStripe: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   flagOrange: {
     backgroundColor: Colors.primary,
@@ -200,6 +204,12 @@ const styles = StyleSheet.create({
   },
   flagGreen: {
     backgroundColor: Colors.secondary,
+  },
+  flagSun: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: Colors.primary,
   },
   welcomeCard: {
     margin: Spacing.md,

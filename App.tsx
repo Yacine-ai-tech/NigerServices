@@ -14,6 +14,7 @@ import { EmergencyScreen } from './src/screens/EmergencyScreen';
 import { NotesScreen } from './src/screens/NotesScreen';
 import { NoteDetailScreen } from './src/screens/NoteDetailScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
+import { AIScreen } from './src/screens/AIScreen';
 import { Colors, FontSize, FontWeight } from './src/constants';
 import { database } from './src/services';
 import { RootStackParamList, MainTabParamList } from './src/types';
@@ -43,6 +44,9 @@ const TabNavigator = () => {
               break;
             case 'Notes':
               iconName = focused ? 'document-text' : 'document-text-outline';
+              break;
+            case 'AI':
+              iconName = focused ? 'sparkles' : 'sparkles-outline';
               break;
             default:
               iconName = 'help';
@@ -90,6 +94,11 @@ const TabNavigator = () => {
         name="Notes" 
         component={NotesScreen}
         options={{ tabBarLabel: 'Notes' }}
+      />
+      <Tab.Screen 
+        name="AI" 
+        component={AIScreen}
+        options={{ tabBarLabel: 'Assistant' }}
       />
     </Tab.Navigator>
   );
